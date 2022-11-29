@@ -11,7 +11,7 @@ class PieChart1 extends Component {
                             labels: ['India', 'China', 'United States', 'Poland', 'Russia', 'Japan', 'Denmark', 'Czech Republic'],
                             values: [16, 15, 10, 9, 9, 6, 6, 5]}
                         ]}
-                    layout={ { width: 1000, height: 500, title: 'Most Tech Schools', paper_bgcolor:'#F0EBE3'}}
+                    layout={ { width: 1000, height: 500, title: 'Most Tech Schools', paper_bgcolor:'#E4DCCF'}}
                 />
             </div>
         )
