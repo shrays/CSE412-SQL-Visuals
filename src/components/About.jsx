@@ -7,7 +7,8 @@ function About() {
       <div class="container">
         <div class="row align-items-center my-5">
           <div class="col-lg-7">
-            <img src={DeLuca} alt="test"/>
+            <img class="img-fluid rounded mb-4 mb-lg-0"
+            src={DeLuca} alt="test"/>
             {/* <img
               class="img-fluid rounded mb-4 mb-lg-0"
               src="http://placehold.it/900x400"

@@ -1,4 +1,5 @@
 import React from "react";
+import QS from "./QS.png"
 
 function Home() {
   return (
@@ -8,12 +9,12 @@ function Home() {
           <div class="col-lg-7">
             <img
               class="img-fluid rounded mb-4 mb-lg-0"
-              src="http://placehold.it/900x400"
+              src={QS}
               alt=""
             />
           </div>
           <div class="col-lg-5">
-            <h1 class="font-weight-light">Home page</h1>
+            <h1 class="font-weight-light">University Stats</h1>
             <p>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
