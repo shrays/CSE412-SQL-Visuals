@@ -9,9 +9,6 @@ import {
   Home,
   About,
   Charts,
-  Blog,
-  Posts,
-  Post,
 } from "./components";
 
 ReactDOM.render(
@@ -21,10 +18,6 @@ ReactDOM.render(
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
       <Route path="/charts" element={<Charts />} />
-      <Route path="/blog" element={<Blog />}>
-        <Route path="" element={<Posts />} />
-        <Route path=":postSlug" element={<Post />} />
-      </Route>
     </Routes>
     <Footer />
   </Router>,
