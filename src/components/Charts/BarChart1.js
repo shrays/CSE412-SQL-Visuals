@@ -8,18 +8,21 @@ class BarChart1 extends Component {
                 <Plot
                     data={[
                         {type: 'bar',
-                            x: ['Nanyang Tech', 'HKU', 'KAIST'],
-                            y: [90.4, 82, 88.1],
+                            x: ['Monash University', 'Brown University', 'Aalto University'],
+                            y: [87, 57, 44],
                             name: 'Academic Reputation'},
                         {type: 'bar',
-                            x: ['Nanyang Tech', 'HKU', 'KAIST'],                            y: [76.1, 50.1, 85.8],
+                            x: ['Monash University', 'Brown University', 'Aalto University'],                            
+                            y: [80, 54, 45],
                             name: 'Employer Reputation'},
                         {type: 'bar',
-                           x: ['Nanyang Tech', 'HKU', 'KAIST'],                            y: [100, 100, 23.1],
+                           x: ['Monash University', 'Brown University', 'Aalto University'],                            
+                           y: [100, 82, 94],
                             name: 'International Faculty Ratio'},
                         {type: 'bar',
-                            x: ['Nanyang Tech', 'HKU', 'KAIST'],                            y: [74.1, 87.9, 12.3],
-                            name: 'International Student Ratio'}
+                            x: ['Monash University', 'Brown University', 'Aalto University'],                            
+                            y: [100, 49, 35],
+                            name: 'International Student Ratio'} 
                         ]}
                     layout={ { width: 1000, height: 500, title: 'University Comparison', paper_bgcolor:'#E4DCCF', plot_bgcolor:'#fffdfa',yaxis: {title: {text: 'Score'}},
                 }}

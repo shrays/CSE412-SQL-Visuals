@@ -1,4 +1,7 @@
-const {Client} = require('pg')
+//database node.js file that contains the connection to the postgres database. This executes the queries which is
+//made use of by plotly to display on the website
+
+const Client = require('pg').Client
 const client = new Client({
     user: "postgres",
     password: "20300bHAC*",
@@ -7,176 +10,183 @@ const client = new Client({
     database: "Oct27"
 })
  
-client.connect()
-.then(() => console.log("Connected successfully"))
-.catch(e => console.log)
-.finally(() => client.end())
-// start()
-// async function start() {
  
-//     await connect();
-//     await topUniversities()                  Pie
-//     await techSchoolComparison()             Bar - change schools
-//     await topAcademicEmployerComparison()    
-//     await techSchoolByCountry()              Pie
-//     await academicVsFaculty()                
-//     await employerVsCitation()               
-//     client.end()
-// }
+start()
+async function start() {
  
-// async function topUniversities() {
-//    let query = "SELECT locationCode, COUNT(locationCode) FROM university GROUP BY locationCode ORDER BY COUNT DESC LIMIT 5"
-//    const data = await performQuery(query);
+    await connect();
+    await topUniversities()         // PieChart1
+    await schoolComparison()        // BarChart1
+    await techSchoolByCountry()     // PieChart2
+    await rankVsScore()             // ScatterChart1
+    await scoreVsAcademicRep()      // ScatterChart2
+    await arizonaSchools()          // BarChart2
+    client.end()
+}
  
-//    console.log("The top five countries represented in this college list")
+async function topUniversities() {
+   let query = "SELECT locationCode, COUNT(locationCode) FROM university GROUP BY locationCode ORDER BY COUNT DESC LIMIT 5"
+   const data = await performQuery(query);
  
-//    var countries = new Array(data.rows.length)
-//    var count = new Array(data.rows.length)
+   console.log("The top five countries represented in this college list")
  
-//     for(let i = 0; i < data.rows.length; i++) {
-//         countries[i] = data.rows[i].locationcode
-//         count[i] = parseInt(data.rows[i].count)
-//     }
+   var countries = new Array(data.rows.length)
+   var count = new Array(data.rows.length)
  
-//     console.log(countries)
-//     console.log(count)
-// }
+    for(let i = 0; i < data.rows.length; i++) {
+        countries[i] = data.rows[i].locationcode
+        count[i] = parseInt(data.rows[i].count)
+    }
  
-// async function techSchoolComparison() {
-//     let query = "SELECT universityName, arScore, erScore, ifrScore, isrScore FROM university INNER JOIN academicReputation ON University.universityRank = arScoreID INNER JOIN employerReputation ON University.universityRank = erScoreID INNER JOIN internationalfacultyratio ON University.universityRank = ifrScoreID INNER JOIN internationalstudentratio ON University.universityRank = isrScoreID INNER JOIN facultystudentratio ON University.universityRank = fsrScoreID WHERE universityName = 'Nanyang Technological University, Singapore (NTU)' OR universityName = 'The Hong Kong University of Science and Technology' OR universityName = 'KAIST - Korea Advanced Institute of Science & Technology'"
-//     const data = await performQuery(query);
+    console.log(countries)
+    console.log(count)
+}
+ 
+async function schoolComparison() {
+    let query = "SELECT universityName, arScore, erScore, ifrScore, isrScore FROM university INNER JOIN academicReputation ON University.universityRank = arScoreID INNER JOIN employerReputation ON University.universityRank = erScoreID INNER JOIN internationalfacultyratio ON University.universityRank = ifrScoreID INNER JOIN internationalstudentratio ON University.universityRank = isrScoreID WHERE universityName = 'Monash University' OR universityName = 'Brown University' OR universityName = 'Aalto University'"
+    const data = await performQuery(query);
    
-//     console.log("")
-//     console.log("Comparing three technology universities in Asia")
+    console.log("")
+    console.log("Comparing three technology universities in Asia")
  
-//     var universities = new Array(data.rows.length)
-//     var academicRep = new Array(data.rows.length)
-//     var employerRep = new Array(data.rows.length)
-//     var intlFacultyRatio = new Array(data.rows.length)
-//     var intlStudentRatio = new Array(data.rows.length)
+    var universities = new Array(data.rows.length)
+    var academicRep = new Array(data.rows.length)
+    var employerRep = new Array(data.rows.length)
+    var intlFacultyRatio = new Array(data.rows.length)
+    var intlStudentRatio = new Array(data.rows.length)
  
-//     for(let i = 0; i < data.rows.length; i++) {
-//         //console.table(data.rows)
-//         universities[i] = data.rows[i].universityname
-//         academicRep[i] = parseInt(data.rows[i].arscore)
-//         employerRep[i] = parseInt(data.rows[i].erscore)
-//         intlFacultyRatio[i] = parseInt(data.rows[i].ifrscore)
-//         intlStudentRatio[i] = parseInt(data.rows[i].isrscore)
-//     }
+    for(let i = 0; i < data.rows.length; i++) {
+        universities[i] = data.rows[i].universityname
+        academicRep[i] = parseInt(data.rows[i].arscore)
+        employerRep[i] = parseInt(data.rows[i].erscore)
+        intlFacultyRatio[i] = parseInt(data.rows[i].ifrscore)
+        intlStudentRatio[i] = parseInt(data.rows[i].isrscore)
+    }
  
-//     console.log(universities)
-//     console.log(academicRep)
-//     console.log(employerRep)
-//     console.log(intlFacultyRatio)
-//     console.log(intlStudentRatio)
+    console.log(universities)
+    console.log(academicRep)
+    console.log(employerRep)
+    console.log(intlFacultyRatio)
+    console.log(intlStudentRatio)
  
-// }
+}
  
-// async function topAcademicEmployerComparison() {
-//     let query = "SELECT universityName, arScore, erScore FROM university INNER JOIN academicreputation ON University.universityrank = arScoreID INNER JOIN employerReputation ON University.universityrank = erScoreID WHERE arScore > 99.5 AND erScore > 98 ORDER BY arScore DESC"
-//     const data = await performQuery(query);
+async function techSchoolByCountry() {
  
-//     console.log("")
-//     console.log("Comparing top 12 universities for academic and employer reputation")
+    let query = "Select locationCode, COUNT(locationCode) FROM university WHERE universityName LIKE '%Tec%' GROUP BY locationCode ORDER BY COUNT DESC LIMIT 8"
+    const data = await performQuery(query);
  
-//     var universities = new Array(data.rows.length)
-//     var academicRep = new Array(data.rows.length)
-//     var employerRep = new Array(data.rows.length)
- 
-//     for(let i = 0; i < data.rows.length; i++) {
-//        // console.table(data.rows)
-//         universities[i] = data.rows[i].universityname
-//         academicRep[i] = parseInt(data.rows[i].arscore)
-//         employerRep[i] = parseInt(data.rows[i].erscore)
-//     }
- 
-//     console.log(universities)
-//     console.log(academicRep)
-//     console.log(employerRep)
- 
-// }
- 
-// async function techSchoolByCountry() {
- 
-//     let query = "Select locationCode, COUNT(locationCode) FROM university WHERE universityName LIKE '%Tec%' GROUP BY locationCode ORDER BY COUNT DESC LIMIT 8"
-//     const data = await performQuery(query);
- 
-//     console.log("")
-//     console.log("Top countries representing technology schools")
+    console.log("")
+    console.log("Top countries representing technology schools")
    
-//     var countries = new Array(data.rows.length)
-//     var count = new Array(data.rows.length)
+    var countries = new Array(data.rows.length)
+    var count = new Array(data.rows.length)
  
-//      for(let i = 0; i < data.rows.length; i++) {
-//          countries[i] = data.rows[i].locationcode
-//          count[i] = parseInt(data.rows[i].count)
-//      }
+     for(let i = 0; i < data.rows.length; i++) {
+         countries[i] = data.rows[i].locationcode
+         count[i] = parseInt(data.rows[i].count)
+     }
  
-//      console.log(countries)
-//      console.log(count)
+     console.log(countries)
+     console.log(count)
  
-// }
+}
  
-// async function academicVsFaculty() {
-//     let query = "SELECT universityName, arscore, fsrscore FROM university INNER JOIN academicreputation ON university.universityrank = academicreputation.arscoreid INNER JOIN facultystudentratio ON university.universityrank = facultystudentratio.fsrscoreid WHERE arscore > 70 AND fsrscore > 70"
-//     const data = await performQuery(query);
+async function rankVsScore() {
+    let query = "SELECT universityname, universityrank, categoryscore FROM University INNER JOIN score ON score.scoreid = University.universityrank LIMIT 500"
+    const data = await performQuery(query);
  
-//     console.log("")
-//     console.log("Scatter Plot of academic reputation vs faculty student ratio for the top 40+ universities")
+    console.log("")
+    console.log("Scatter Plot of overall score vs rank for the top 500 universities")
  
-//     var universities = new Array(data.rows.length)
-//     var academicRep = new Array(data.rows.length)
-//     var facultyStudentRatios = new Array(data.rows.length)
+    var universities = new Array(data.rows.length)
+    var ranks = new Array(data.rows.length)
+    var overallScores = new Array(data.rows.length)
  
-//     for(let i = 0; i < data.rows.length; i++) {
-//         universities[i] = data.rows[i].universityname
-//         academicRep[i] = parseInt(data.rows[i].arscore)
-//         facultyStudentRatios[i] = parseInt(data.rows[i].fsrscore)
-//     }
+    for(let i = 0; i < data.rows.length; i++) {
+        universities[i] = data.rows[i].universityname
+        ranks[i] = parseInt(data.rows[i].universityrank)
+        overallScores[i] = parseInt(data.rows[i].categoryscore)
+    }
  
-//     console.log(universities)
-//     console.log(academicRep)
-//     console.log(facultyStudentRatios)
-// }
+    console.log(universities)
+    console.log(ranks)
+    console.log(overallScores)
+}
  
-// async function employerVsCitation() {
-//     let query = "SELECT universityName, cpfscore, erscore FROM university INNER JOIN citationsPerFaculty ON university.universityrank = citationsPerFaculty.cpfscoreid INNER JOIN employerreputation ON university.universityrank = employerReputation.erscoreid WHERE cpfscore > 45 AND cpfscore < 80 AND erscore > 45 AND erscore < 80"
-//     const data = await performQuery(query);
+async function scoreVsAcademicRep() {
+    let query = "SELECT universityname, categoryscore, arscore FROM University INNER JOIN score ON score.scoreid = University.universityrank INNER JOIN academicreputation ON arscoreID = score.scoreid LIMIT 500"
+    const data = await performQuery(query);
  
-//     console.log("")
-//     console.log("Scatter Plot of employer reputation vs citations per faculty for mid-tier universities")
+    console.log("")
+    console.log("Scatter Plot of overall score versus academic reputation")
  
-//     var universities = new Array(data.rows.length)
-//     var citationsPerFacultyMembers = new Array(data.rows.length)
-//     var employerReputations = new Array(data.rows.length)
+    var universities = new Array(data.rows.length)
+    var overallScores = new Array(data.rows.length)
+    var academicReputation = new Array(data.rows.length)
  
-//     for(let i = 0; i < data.rows.length; i++) {
-//         universities[i] = data.rows[i].universityname
-//         citationsPerFacultyMembers[i] = parseInt(data.rows[i].cpfscore)
-//         employerReputations[i] = parseInt(data.rows[i].erscore)
-//     }
+    for(let i = 0; i < data.rows.length; i++) {
+        universities[i] = data.rows[i].universityname
+        overallScores[i] = parseInt(data.rows[i].categoryscore)
+        academicReputation[i] = parseInt(data.rows[i].arscore)
+    }
  
-//     console.log(universities)
-//     console.log(citationsPerFacultyMembers)
-//     console.log(employerReputations)
-// }
+    console.log(universities)
+    console.log(overallScores)
+    console.log(academicReputation)
+}
+
+async function arizonaSchools() {
+    let query = "SELECT universityName, arscore, cpfscore, erscore, ifrscore, irnscore, isrscore FROM university INNER JOIN academicreputation ON arscoreid = universityRank INNER JOIN citationsperfaculty ON cpfscoreid = universityRank INNER JOIN employerreputation ON erscoreid = universityRank INNER JOIN internationalfacultyratio ON ifrscoreid = universityrank INNER JOIN internationalresearchnetwork ON irnscoreid = universityrank INNER JOIN internationalstudentratio ON isrscoreid = universityrank WHERE universityName LIKE '%Arizona%'"
+    const data = await performQuery(query);
  
-// async function connect() {
-//     try {
-//         await client.connect()
-//     }
-//     catch(e) {
-//         console.error('Failed to connect ${e}')
-//     }
-// }
+    console.log("")
+    console.log("Bar chart comparing our three Arizona universities")
  
-// async function performQuery(query) {
-//     try {
-//         const results = await client.query(query)
-//         return results
+    var universities = new Array(data.rows.length)
+    var academicRep = new Array(data.rows.length)
+    var citationsPerFaculty = new Array(data.rows.length)
+    var employerRep = new Array(data.rows.length)
+    var internationalFacultyRatio = new Array(data.rows.length)
+    var interantionalResearchNetwork = new Array(data.rows.length)
+    var internationalStudentRatio = new Array(data.rows.length)
  
-//     }
-//     catch(e) {
-//         return []
-//     }
-// }
+    for(let i = 0; i < data.rows.length; i++) {
+        universities[i] = data.rows[i].universityname
+        academicRep[i] = parseInt(data.rows[i].arscore)
+        citationsPerFaculty[i] = parseInt(data.rows[i].cpfscore)
+        employerRep[i] = parseInt(data.rows[i].erscore)
+        interantionalResearchNetwork[i] = parseInt(data.rows[i].irnscore)
+        internationalFacultyRatio[i] = parseInt(data.rows[i].ifrscore)
+        internationalStudentRatio[i] = parseInt(data.rows[i].isrscore)
+    }
+ 
+    console.log(universities)
+    console.log(academicRep)
+    console.log(citationsPerFaculty)
+    console.log(employerRep)
+    console.log(internationalFacultyRatio)
+    console.log(interantionalResearchNetwork)
+    console.log(internationalStudentRatio)
+
+}
+ 
+async function connect() {
+    try {
+        await client.connect()
+    }
+    catch(e) {
+        console.error('Failed to connect ${e}')
+    }
+}
+ 
+async function performQuery(query) {
+    try {
+        const results = await client.query(query)
+        return results
+ 
+    }
+    catch(e) {
+        return []
+    }
+}
