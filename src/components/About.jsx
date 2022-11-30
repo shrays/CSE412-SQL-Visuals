@@ -22,7 +22,8 @@ function About() {
               The goal of this website is to show summary statistics of the current global university rankings.
               This is achieved because the visuals rely on a database which can be updated yearly and as a result
               the summary statistics visualizations do not have to be edited at all assuming the ranking criteria remain the same.
-              This project is locally hosted and uses a local PostgreSQL server.
+              This project is locally hosted and uses a local PostgreSQL server and Javascript Plotly. By Javier Aguilar, Joseph Olakkengil, and Shray Swarup.
+
 
             </p>
 

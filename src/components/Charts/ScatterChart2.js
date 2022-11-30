@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Plot from 'react-plotly.js';
 
-console.log("hi")
 class BarChart extends Component {
     render() {
         return (
