@@ -3,6 +3,9 @@ import Plot from 'react-plotly.js';
 
 class PieChart1 extends Component {
     render() {
+        let PC2countries = ["United States", "United Kingdom", "China", "Germany", "France", "Armenia"];
+        let PC2count = [12, 3, 9, 2, 1, 80];
+        
         return (
             <div>
                 <Plot

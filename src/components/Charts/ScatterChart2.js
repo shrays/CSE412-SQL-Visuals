@@ -3,6 +3,10 @@ import Plot from 'react-plotly.js';
 
 class BarChart extends Component {
     render() {
+        let SC2academicReputation = [100, 98, 43];
+        let SC2overallScores = [100, 98, 43];
+        let SC2universities = "Universities"
+        
         return (
             <div>
                 <Plot

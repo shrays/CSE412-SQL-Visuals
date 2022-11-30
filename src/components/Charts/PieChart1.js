@@ -3,6 +3,9 @@ import Plot from 'react-plotly.js';
 
 class PieChart1 extends Component {
     render() {
+        let PC1Labels = ["UC Berkeley", "Arizona State University", "University of Arizona"];
+        let PC1Values = [100, 98, 43];
+
         return (
             <div>
                 <Plot
