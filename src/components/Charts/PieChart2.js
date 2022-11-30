@@ -8,8 +8,8 @@ class PieChart1 extends Component {
                 <Plot
                     data={[
                         {type: 'pie',
-                            labels: ['India', 'China', 'United States', 'Poland', 'Russia', 'Japan', 'Denmark', 'Czech Republic'],
-                            values: [16, 15, 10, 9, 9, 6, 6, 5]}
+                            labels: PC2countries,
+                            values: PC2count}
                         ]}
                     layout={ { width: 1000, height: 500, title: 'Most Technology Schools', paper_bgcolor:'#E4DCCF'}}
                 />
