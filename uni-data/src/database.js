@@ -16,7 +16,7 @@ async function start() {
  
     await connect();
     await topUniversities()
-    await schoolComparison()
+    await techSchoolComparison()
     await techSchoolByCountry()
     await rankVsScore()
     await scoreVsAcademicRep()
@@ -42,8 +42,8 @@ async function topUniversities() {
     console.log(count)
 }
  
-async function schoolComparison() {
-    let query = "SELECT universityName, arScore, erScore, ifrScore, isrScore FROM university INNER JOIN academicReputation ON University.universityRank = arScoreID INNER JOIN employerReputation ON University.universityRank = erScoreID INNER JOIN internationalfacultyratio ON University.universityRank = ifrScoreID INNER JOIN internationalstudentratio ON University.universityRank = isrScoreID WHERE universityName = 'Monash University' OR universityName = 'Brown University' OR universityName = 'Aalto University'"
+async function techSchoolComparison() {
+    let query = "SELECT universityName, arScore, erScore, ifrScore, isrScore FROM university INNER JOIN academicReputation ON University.universityRank = arScoreID INNER JOIN employerReputation ON University.universityRank = erScoreID INNER JOIN internationalfacultyratio ON University.universityRank = ifrScoreID INNER JOIN internationalstudentratio ON University.universityRank = isrScoreID INNER JOIN facultystudentratio ON University.universityRank = fsrScoreID WHERE universityName = 'Nanyang Technological University, Singapore (NTU)' OR universityName = 'The Hong Kong University of Science and Technology' OR universityName = 'KAIST - Korea Advanced Institute of Science & Technology'"
     const data = await performQuery(query);
    
     console.log("")
@@ -137,16 +137,17 @@ async function scoreVsAcademicRep() {
 }
 
 async function arizonaSchools() {
-    let query = "SELECT universityName, arscore, cpfscore, erscore, ifrscore, irnscore, isrscore FROM university INNER JOIN academicreputation ON arscoreid = universityRank INNER JOIN citationsperfaculty ON cpfscoreid = universityRank INNER JOIN employerreputation ON erscoreid = universityRank INNER JOIN internationalfacultyratio ON ifrscoreid = universityrank INNER JOIN internationalresearchnetwork ON irnscoreid = universityrank INNER JOIN internationalstudentratio ON isrscoreid = universityrank WHERE universityName LIKE '%Arizona%'"
+    let query = "SELECT universityName, arscore, cpfscore, erscore, fsrscore, ifrscore, irnscore, isrscore FROM university INNER JOIN academicreputation ON arscoreid = universityRank INNER JOIN citationsperfaculty ON cpfscoreid = universityRank INNER JOIN employerreputation ON erscoreid = universityRank INNER JOIN facultystudentratio ON fsrscoreid = universityRank INNER JOIN internationalfacultyratio ON ifrscoreid = universityrank INNER JOIN internationalresearchnetwork ON irnscoreid = universityrank INNER JOIN internationalstudentratio ON isrscoreid = universityrank WHERE universityName LIKE '%Arizona%'"
     const data = await performQuery(query);
  
     console.log("")
-    console.log("Bar chart comparing our three Arizona universities")
+    console.log("Bar chart comparing our three arizona universities")
  
     var universities = new Array(data.rows.length)
     var academicRep = new Array(data.rows.length)
     var citationsPerFaculty = new Array(data.rows.length)
     var employerRep = new Array(data.rows.length)
+    var facultyStudentRatios = new Array(data.rows.length)
     var internationalFacultyRatio = new Array(data.rows.length)
     var interantionalResearchNetwork = new Array(data.rows.length)
     var internationalStudentRatio = new Array(data.rows.length)
@@ -156,6 +157,7 @@ async function arizonaSchools() {
         academicRep[i] = parseInt(data.rows[i].arscore)
         citationsPerFaculty[i] = parseInt(data.rows[i].cpfscore)
         employerRep[i] = parseInt(data.rows[i].erscore)
+        facultyStudentRatios[i] = parseInt(data.rows[i].fsrscore)
         interantionalResearchNetwork[i] = parseInt(data.rows[i].irnscore)
         internationalFacultyRatio[i] = parseInt(data.rows[i].ifrscore)
         internationalStudentRatio[i] = parseInt(data.rows[i].isrscore)
@@ -165,6 +167,7 @@ async function arizonaSchools() {
     console.log(academicRep)
     console.log(citationsPerFaculty)
     console.log(employerRep)
+    console.log(facultyStudentRatios)
     console.log(internationalFacultyRatio)
     console.log(interantionalResearchNetwork)
     console.log(internationalStudentRatio)
