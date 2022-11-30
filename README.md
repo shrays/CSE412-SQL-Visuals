@@ -14,6 +14,7 @@ To start a development server, use the following `npm` script:
 npm start
 ```
 
+<<<<<<< HEAD
 To output the project to a static build:
 ```sh
 npm run build
