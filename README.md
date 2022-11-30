@@ -16,5 +16,5 @@ npm start
 
 To output the project to a static build:
 ```sh
-npm build
+npm run build
 ```
