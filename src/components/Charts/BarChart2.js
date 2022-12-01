@@ -3,6 +3,14 @@ import Plot from 'react-plotly.js';
 
 class BarChart1 extends Component {
     render() {
+        let BC2universities = ["UC Berkeley", "Arizona State University", "University of Arizona"];
+        let BC2academicRep = [100, 98, 43];
+        let BC2citationsPerFaculty = [532, 76, 2];
+        let BC2employerRep = [67, 78, 77];
+        let BC2internationalFacultyRatio = [0.3, 0.3, 0.2];
+        let BC2interantionalResearchNetwork = [0.8, 0.3, 0.2];
+        let BC2internationalStudentRatio = [0.9999, 0.3, 0.2];
+
         return (
             <div>
                 <Plot

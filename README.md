@@ -1,16 +1,20 @@
 # CSE412-SQL-Visuals
 
+CSE412 Fall 2022
+
 ## Setup
+This project requires NodeJS and `npm`. Run the following command to get started:
+```sh
+npm i
+```
 
-Project requires npm and NodeJS. Run ```npm i``` to install dependencies
+## Develop
+To start a development server, use the following `npm` script:
+```sh
+npm start
+```
 
-### `npm start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-
-Credit: https://github.com/facebook/create-react-app).
+To output the project to a static build:
+```sh
+npm run build
+```

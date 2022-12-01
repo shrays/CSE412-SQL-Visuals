@@ -1,5 +1,6 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -11,18 +12,21 @@ import {
   Charts,
 } from "./components";
 
-ReactDOM.render(
-  <Router>
-    <Navigation />
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/charts" element={<Charts />} />
-    </Routes>
-    <Footer />
-  </Router>,
+const container = document.getElementById("root");
+const root = createRoot(container);
 
-  document.getElementById("root")
+root.render(
+  <StrictMode>
+    <Router>
+      <Navigation />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/charts" element={<Charts />} />
+      </Routes>
+      <Footer />
+    </Router>
+  </StrictMode>
 );
 
 serviceWorker.unregister();
