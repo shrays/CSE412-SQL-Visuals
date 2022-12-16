@@ -1,4 +1,9 @@
-# CSE412-SQL-Visuals
+# University Rankings
+
+Dynamic and Static versions. Visualization using Plotly.js from PostgreSQL queries.
+
+Source: https://www.topuniversities.com/qs-world-university-rankings/methodology
+
 
 ## Setup
 
